@@ -1,8 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace CalorieApp
+﻿namespace CalorieApp
 {
     public partial class MainWindow : Window
     {
@@ -16,7 +12,6 @@ namespace CalorieApp
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Валидация: все поля должны быть заполнены
             if (string.IsNullOrWhiteSpace(NameInput.Text))
             {
                 MessageBox.Show("Введите название блюда.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -35,13 +30,10 @@ namespace CalorieApp
                 return;
             }
 
-            // Получаем выбранный приём пищи из ComboBox
             string meal = (MealCombo.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Перекус";
 
-            // Добавляем блюдо через ViewModel
             viewModel.AddFood(NameInput.Text.Trim(), weight, cal100, meal);
 
-            // Очищаем поля после добавления
             NameInput.Text = string.Empty;
             WeightInput.Text = string.Empty;
             CalInput.Text = string.Empty;
