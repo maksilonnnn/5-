@@ -1,0 +1,176 @@
+<Window x:Class="CalorieApp.AddFoodWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="420"
+        Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{DynamicResource AppBackground}">
+
+    <Window.Resources>
+        <Style x:Key="DialogButton"
+               TargetType="Button">
+            <Setter Property="Height"
+                    Value="44"/>
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent">
+                            <Border x:Name="Inner"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="10">
+                                <Border.RenderTransform>
+                                    <TranslateTransform Y="0"/>
+                                </Border.RenderTransform>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Inner"
+                                            Storyboard.TargetProperty="RenderTransform.Y"
+                                            To="-6"
+                                            Duration="0:0:0.15">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Inner"
+                                            Storyboard.TargetProperty="RenderTransform.Y"
+                                            To="0"
+                                            Duration="0:0:0.15">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource InputBorder}"/>
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+            <Setter Property="Padding"
+                    Value="10,8"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+            <Setter Property="Background"
+                    Value="{DynamicResource CardBackground}"/>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryText}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="2,0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TitleText"
+                   Grid.Row="0"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Margin="0,0,0,20"
+                   Foreground="{DynamicResource PrimaryText}"/>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Название:"
+                       Foreground="{DynamicResource SecondaryText}"
+                       FontSize="12"/>
+            <TextBox x:Name="NameInput"
+                     Margin="0,4,0,14"/>
+
+            <TextBlock Text="Вес (г):"
+                       Foreground="{DynamicResource SecondaryText}"
+                       FontSize="12"/>
+            <TextBox x:Name="WeightInput"
+                     Margin="0,4,0,14"/>
+
+            <TextBlock Text="Калории на 100г:"
+                       Foreground="{DynamicResource SecondaryText}"
+                       FontSize="12"/>
+            <TextBox x:Name="CalInput"
+                     Margin="0,4,0,14"/>
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Content="Отмена"
+                    Click="Cancel_Click"
+                    Style="{StaticResource DialogButton}"
+                    Background="{DynamicResource IconBackground}"
+                    Foreground="{DynamicResource PrimaryText}"/>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            </Button>
+            <Button Grid.Column="2"
+                    Content="Добавить"
+                    Click="Add_Click"
+                    Style="{StaticResource DialogButton}"
+                    Background="#007AFF"
+                    Foreground="White"
+                    FontWeight="Bold"/>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
