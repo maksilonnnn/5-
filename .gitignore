@@ -1,0 +1,16 @@
+# 1. Игнорируем абсолютно всё
+*
+
+# 2. Разрешаем Git заходить в нужные папки
+!ViewModels/
+!Models/
+
+# 3. Разрешаем сам файл .gitignore (чтобы настройки сохранялись)
+!.gitignore
+
+# 4. Разрешаем только конкретные файлы
+!ViewModels/MainViewModel.cs
+!ViewModels/MealGroupViewModel.cs
+!Models/FoodItem.cs
+!Models/MealGroup.cs
+!5story.txt
