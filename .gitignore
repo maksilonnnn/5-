@@ -1,0 +1,10 @@
+# Папки сборки
+bin/
+obj/
+
+# Решение Visual Studio
+*.sln
+
+# Qwen Code
+.qwen/
+.gitignore
