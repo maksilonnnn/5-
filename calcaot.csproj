@@ -6,6 +6,49 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+    <ApplicationIcon>calcaot_img.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Resource Include="calcaot_img.ico" />
+    <Resource Include="Interface\ingestion-png\Завтрак.png" />
+    <Resource Include="Interface\ingestion-png\Обед.png" />
+    <Resource Include="Interface\ingestion-png\Ужин.png" />
+    <Resource Include="Interface\ingestion-png\Перекус.png" />
+    <Resource Include="Interface\ingestion-png\Добавить.png" />
+    <ApplicationDefinition Include="Interface\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="Interface\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interface\AddFoodWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interface\MealDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Interface-logic\MainWindow.xaml.cs">
+      <DependentUpon>Interface\MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interface-logic\AddFoodWindow.xaml.cs">
+      <DependentUpon>Interface\AddFoodWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interface-logic\MealDetailWindow.xaml.cs">
+      <DependentUpon>Interface\MealDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interface-logic\App.xaml.cs">
+      <DependentUpon>Interface\App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\FoodItem.cs" />
+    <Compile Include="Models\MealGroup.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MealGroupViewModel.cs" />
+  </ItemGroup>
+
 </Project>
+

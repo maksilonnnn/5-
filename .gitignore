@@ -1,0 +1,16 @@
+# Build outputs
+bin/
+obj/
+
+# IDE files
+.vs/
+*.user
+*.suo
+*.userprefs
+
+# Qwen settings
+.qwen/
+
+# OS files
+Thumbs.db
+desktop.ini
