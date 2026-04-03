@@ -1,10 +1,16 @@
-# Папки сборки
+# Build outputs
 bin/
 obj/
 
-# Решение Visual Studio
-*.sln
+# IDE files
+.vs/
+*.user
+*.suo
+*.userprefs
 
-# Qwen Code
+# Qwen settings
 .qwen/
-.gitignore
+
+# OS files
+Thumbs.db
+desktop.ini

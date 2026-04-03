@@ -5,7 +5,8 @@
         Width="400"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        Background="{DynamicResource AppBackground}">
+        Background="{DynamicResource AppBackground}"
+        Title = "Добавление еды">
 
     <Window.Resources>
         <Style x:Key="DialogButton"

@@ -20,10 +20,10 @@ namespace calcaot.ViewModels
         {
             MealGroups = new ObservableCollection<MealGroupViewModel>
             {
-                new MealGroupViewModel(new MealGroup { Name = "Завтрак", Icon = "🌅", CalorieGoal = 600 }),
-                new MealGroupViewModel(new MealGroup { Name = "Обед",    Icon = "☀️", CalorieGoal = 900 }),
-                new MealGroupViewModel(new MealGroup { Name = "Ужин",    Icon = "🌙", CalorieGoal = 700 }),
-                new MealGroupViewModel(new MealGroup { Name = "Перекус", Icon = "🍎", CalorieGoal = 300 }),
+                new MealGroupViewModel(new MealGroup { Name = "Завтрак", Icon = "pack://application:,,,/Interface/ingestion-png/Завтрак.png", CalorieGoal = 600 }),
+                new MealGroupViewModel(new MealGroup { Name = "Обед",    Icon = "pack://application:,,,/Interface/ingestion-png/Обед.png",    CalorieGoal = 900 }),
+                new MealGroupViewModel(new MealGroup { Name = "Ужин",    Icon = "pack://application:,,,/Interface/ingestion-png/Ужин.png",    CalorieGoal = 700 }),
+                new MealGroupViewModel(new MealGroup { Name = "Перекус", Icon = "pack://application:,,,/Interface/ingestion-png/Перекус.png", CalorieGoal = 300 }),
             };
 
             foreach (var meal in MealGroups)

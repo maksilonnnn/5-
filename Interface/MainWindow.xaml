@@ -1,12 +1,63 @@
 ﻿<Window x:Class="calcaot.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Calorie Tracker"
+        Title="Calcaot"
         Height="680" Width="420"
         Background="{DynamicResource AppBackground}"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
+    <Style x:Key="AddImageButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="Transparent">
+                        <Border x:Name="Inner" Background="{TemplateBinding Background}">
+                            <Border.RenderTransform>
+                                <TranslateTransform Y="0"/>
+                            </Border.RenderTransform>
+                            <ContentPresenter/>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Inner"
+                                        Storyboard.TargetProperty="RenderTransform.Y"
+                                        To="-6" Duration="0:0:0.15">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CubicEase EasingMode="EaseOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Inner"
+                                        Storyboard.TargetProperty="RenderTransform.Y"
+                                        To="0" Duration="0:0:0.15">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CubicEase EasingMode="EaseOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="AddButton" TargetType="Button">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
@@ -178,10 +229,13 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Сегодня" FontSize="28" FontWeight="Bold"
                            Foreground="{DynamicResource PrimaryText}"/>
-                <Button Grid.Column="1" Content="🌙"
+                <Button Grid.Column="1"
                         Click="ToggleTheme_Click"
                         Style="{StaticResource MoonButton}"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center">
+                    <TextBlock Text="🌙" FontSize="20"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
             </Grid>
 
             <Border Background="{DynamicResource CardBackground}" CornerRadius="20" Padding="20" Margin="0,0,0,14">
@@ -241,12 +295,9 @@
                                         Style="{StaticResource TransparentButton}"
                                         HorizontalContentAlignment="Left">
                                     <StackPanel Orientation="Horizontal">
-                                        <Border Width="44" Height="44" CornerRadius="12"
-                                                Background="{DynamicResource IconBackground}" Margin="0,0,12,0">
-                                            <TextBlock Text="{Binding Icon}" FontSize="22"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"/>
-                                        </Border>
+                                        <Image Source="{Binding Icon}"
+                                               Width="44" Height="44"
+                                               Margin="0,0,12,0"/>
                                         <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Name}"
                                                        FontWeight="Bold" FontSize="15"
@@ -257,11 +308,14 @@
                                     </StackPanel>
                                 </Button>
 
-                                <Button Grid.Column="1" Content="+"
+                                <Button Grid.Column="1"
                                         Tag="{Binding Name}"
                                         Click="AddFood_Click"
-                                        Style="{StaticResource AddButton}"
-                                        VerticalAlignment="Center"/>
+                                        Style="{StaticResource AddImageButton}"
+                                        VerticalAlignment="Center">
+                                    <Image Source="pack://application:,,,/Interface/ingestion-png/Добавить.png"
+                                           Width="34" Height="34"/>
+                                </Button>
                             </Grid>
                         </Border>
                     </DataTemplate>
