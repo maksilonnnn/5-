@@ -165,72 +165,124 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MoonButton" TargetType="Button">
-        <Setter Property="Width" Value="38"/>
-        <Setter Property="Height" Value="38"/>
-        <Setter Property="Background" Value="{DynamicResource CardBackground}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="Transparent">
-                        <Border x:Name="Inner" Background="{TemplateBinding Background}" CornerRadius="19">
-                            <Border.RenderTransform>
-                                <TranslateTransform Y="0"/>
-                            </Border.RenderTransform>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
+  <Style x:Key="MoonButton" TargetType="Button">
+    <Setter Property="Width" Value="38"/>
+    <Setter Property="Height" Value="38"/>
+    <Setter Property="Background" Value="{DynamicResource CardBackground}"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="FontSize" Value="20"/>
+    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="Opacity" Value="1"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="Button">
+                <Border Background="Transparent">
+                    <Border x:Name="Inner"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="19">
+                        <Border.RenderTransform>
+                            <TranslateTransform Y="0"/>
+                        </Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
                     </Border>
-                    <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="Inner"
-                                        Storyboard.TargetProperty="RenderTransform.Y"
-                                        To="-6" Duration="0:0:0.15">
-                                        <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
-                                        </DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="Inner"
-                                        Storyboard.TargetProperty="RenderTransform.Y"
-                                        To="0" Duration="0:0:0.15">
-                                        <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
-                                        </DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+                </Border>
+                <ControlTemplate.Triggers>
+
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.3"/>
+                    </Trigger>
+
+                    <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetName="Inner"
+                                    Storyboard.TargetProperty="RenderTransform.Y"
+                                    To="-6" Duration="0:0:0.15">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ColorAnimation
+                                    Storyboard.TargetName="Inner"
+                                    Storyboard.TargetProperty="Background.Color"
+                                    To="#1B3A6B"
+                                    Duration="0:0:0.15">
+                                    <ColorAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut"/>
+                                    </ColorAnimation.EasingFunction>
+                                </ColorAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+
+                    <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetName="Inner"
+                                    Storyboard.TargetProperty="RenderTransform.Y"
+                                    To="0" Duration="0:0:0.15">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ColorAnimation
+                                    Storyboard.TargetName="Inner"
+                                    Storyboard.TargetProperty="Background.Color"
+                                    Duration="0:0:0.15">
+                                    <ColorAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut"/>
+                                    </ColorAnimation.EasingFunction>
+                                </ColorAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
 </Window.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource AppBackground}">
-        <StackPanel Margin="20,30,20,20">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource AppBackground}">
+            <StackPanel Margin="20,30,20,20">
 
             <Grid Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Сегодня" FontSize="28" FontWeight="Bold"
                            Foreground="{DynamicResource PrimaryText}"/>
-                <Button Grid.Column="1"
-                        Click="ToggleTheme_Click"
+
+<Button Grid.Column="1"
+        Command="{Binding UndoCommand}"
+        Style="{StaticResource MoonButton}"
+        Margin="0,0,10,0"
+        VerticalAlignment="Center">
+    <TextBlock Text="↩" FontSize="16"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+</Button>
+
+<Button Grid.Column="2"
+        Command="{Binding RedoCommand}"
+        Style="{StaticResource MoonButton}"
+        Margin="0,0,10,0"
+        VerticalAlignment="Center">
+    <TextBlock Text="↪" FontSize="16"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+</Button>
+
+                <Button Grid.Column="3"
+                        Command="{Binding ToggleThemeCommand}"
                         Style="{StaticResource MoonButton}"
                         VerticalAlignment="Center">
                     <TextBlock Text="🌙" FontSize="20"
@@ -264,6 +316,7 @@
                         <Ellipse Width="130" Height="130"
                                  Stroke="#E5E5EA" StrokeThickness="10" Fill="Transparent"/>
                         <Path x:Name="ProgressArc"
+                              Data="{Binding Progress, Converter={StaticResource ProgressToArcConverter}}"
                               Stroke="#007AFF" StrokeThickness="10"
                               StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                               Fill="Transparent"/>
@@ -290,8 +343,8 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Button Grid.Column="0"
-                                        Tag="{Binding Name}"
-                                        Click="MealRow_Click"
+                                        Command="{Binding DataContext.OpenMealDetailCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
                                         Style="{StaticResource TransparentButton}"
                                         HorizontalContentAlignment="Left">
                                     <StackPanel Orientation="Horizontal">
@@ -309,8 +362,8 @@
                                 </Button>
 
                                 <Button Grid.Column="1"
-                                        Tag="{Binding Name}"
-                                        Click="AddFood_Click"
+                                        Command="{Binding DataContext.OpenAddFoodCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding Name}"
                                         Style="{StaticResource AddImageButton}"
                                         VerticalAlignment="Center">
                                     <Image Source="pack://application:,,,/Interface/ingestion-png/Добавить.png"
@@ -324,4 +377,10 @@
 
         </StackPanel>
     </ScrollViewer>
+
+        <Rectangle x:Name="ThemeFadeOverlay"
+                   Fill="Transparent"
+                   Opacity="0"
+                   IsHitTestVisible="False"/>
+    </Grid>
 </Window>

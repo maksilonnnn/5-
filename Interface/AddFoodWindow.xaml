@@ -6,7 +6,7 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="{DynamicResource AppBackground}"
-        Title = "Добавление еды">
+        Title="{Binding Title}">
 
     <Window.Resources>
         <Style x:Key="DialogButton"
@@ -111,26 +111,34 @@
                    FontSize="22"
                    FontWeight="Bold"
                    Margin="0,0,0,20"
-                   Foreground="{DynamicResource PrimaryText}"/>
+                   Foreground="{DynamicResource PrimaryText}"
+                   Text="{Binding Title}"/>
 
         <StackPanel Grid.Row="1">
             <TextBlock Text="Название:"
                        Foreground="{DynamicResource SecondaryText}"
                        FontSize="12"/>
-            <TextBox x:Name="NameInput"
-                     Margin="0,4,0,14"/>
+            <TextBox Margin="0,4,0,14"
+                     Text="{Binding FoodName, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="Вес (г):"
                        Foreground="{DynamicResource SecondaryText}"
                        FontSize="12"/>
-            <TextBox x:Name="WeightInput"
-                     Margin="0,4,0,14"/>
+            <TextBox Margin="0,4,0,14"
+                     Text="{Binding WeightText, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="Калории на 100г:"
                        Foreground="{DynamicResource SecondaryText}"
                        FontSize="12"/>
-            <TextBox x:Name="CalInput"
-                     Margin="0,4,0,14"/>
+            <TextBox Margin="0,4,0,14"
+                     Text="{Binding CaloriesText, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock x:Name="ErrorMessage"
+                       Text="{Binding ErrorMessage}"
+                       Foreground="#FF6B35"
+                       FontSize="12"
+                       Margin="0,0,0,10"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
         </StackPanel>
 
         <Grid Grid.Row="2">
@@ -141,13 +149,13 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"
                     Content="Отмена"
-                    Click="Cancel_Click"
+                    Command="{Binding CancelCommand}"
                     Style="{StaticResource DialogButton}"
                     Background="{DynamicResource IconBackground}"
                     Foreground="{DynamicResource PrimaryText}"/>
             <Button Grid.Column="2"
                     Content="Добавить"
-                    Click="Add_Click"
+                    Command="{Binding ConfirmCommand}"
                     Style="{StaticResource DialogButton}"
                     Background="#007AFF"
                     Foreground="White"

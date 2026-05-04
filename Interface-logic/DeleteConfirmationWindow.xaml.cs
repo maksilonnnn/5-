@@ -3,14 +3,14 @@ using calcaot.ViewModels;
 
 namespace calcaot
 {
-    public partial class AddFoodWindow : Window
+    public partial class DeleteConfirmationWindow : Window
     {
-        private readonly AddFoodViewModel _viewModel;
+        private readonly DeleteConfirmationViewModel _viewModel;
 
-        public AddFoodWindow(AddFoodViewModel viewModel)
+        public DeleteConfirmationWindow(string foodName)
         {
             InitializeComponent();
-            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+            _viewModel = new DeleteConfirmationViewModel(foodName);
             DataContext = _viewModel;
 
             _viewModel.RequestClose += (isConfirmed) =>

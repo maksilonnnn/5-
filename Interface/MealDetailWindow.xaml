@@ -71,6 +71,7 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,14">
             <TextBlock x:Name="TitleText"
+                       Text="{Binding Name}"
                        FontSize="22"
                        FontWeight="Bold"
                        VerticalAlignment="Center"
@@ -80,6 +81,7 @@
         <ScrollViewer Grid.Row="1"
                       VerticalScrollBarVisibility="Auto">
             <ListBox x:Name="FoodsList"
+                     ItemsSource="{Binding Foods}"
                      BorderThickness="0"
                      Background="Transparent">
                 <ListBox.ItemContainerStyle>
@@ -127,20 +129,20 @@
                                         Content="✏️"
                                         Width="36" Height="36"
                                         Margin="0,0,8,0"
-                                        Click="EditButton_Click"
+                                        Command="{Binding DataContext.EditFoodCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
                                         Style="{StaticResource IconButton}"
                                         Background="{DynamicResource EditBackground}"
-                                        ToolTip="Редактировать"
-                                        Tag="{Binding}"/>
+                                        ToolTip="Редактировать"/>
 
                                 <Button Grid.Column="2"
                                         Content="🗑️"
                                         Width="36" Height="36"
-                                        Click="DeleteButton_Click"
+                                        Command="{Binding DataContext.DeleteFoodCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
                                         Style="{StaticResource IconButton}"
                                         Background="{DynamicResource DeleteBackground}"
-                                        ToolTip="Удалить"
-                                        Tag="{Binding}"/>
+                                        ToolTip="Удалить"/>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -154,6 +156,7 @@
                    HorizontalAlignment="Right"
                    FontSize="14"
                    FontWeight="Bold"
-                   Foreground="{DynamicResource SecondaryText}"/>
+                   Foreground="{DynamicResource SecondaryText}"
+                   Text="{Binding Summary}"/>
     </Grid>
 </Window>

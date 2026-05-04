@@ -31,6 +31,12 @@
     <Page Include="Interface\MealDetailWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interface\DeleteConfirmationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Interface-logic\DeleteConfirmationWindow.xaml.cs">
+      <DependentUpon>Interface\DeleteConfirmationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interface-logic\MainWindow.xaml.cs">
       <DependentUpon>Interface\MainWindow.xaml</DependentUpon>
     </Compile>
@@ -43,12 +49,32 @@
     <Compile Include="Interface-logic\App.xaml.cs">
       <DependentUpon>Interface\App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\IThemeService.cs" />
+    <Compile Include="Services\ThemeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\FoodItem.cs" />
     <Compile Include="Models\MealGroup.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MealGroupViewModel.cs" />
+    <Compile Include="ViewModels\AddFoodViewModel.cs" />
+    <Compile Include="ViewModels\DeleteConfirmationViewModel.cs" />
+    <Compile Include="Interface\Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Interface\Converters\ProgressToArcConverter.cs" />
+    <Compile Include="ViewModels\Commands\IUndoableCommand.cs" />
+    <Compile Include="ViewModels\Commands\CommandHistory.cs" />
+    <Compile Include="ViewModels\Commands\AddFoodCommand.cs" />
+    <Compile Include="ViewModels\Commands\DeleteFoodCommand.cs" />
+    <Compile Include="ViewModels\Commands\EditFoodCommand.cs" />
+    <Page Include="Interface\Themes\DarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interface\Themes\LightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
 </Project>
-

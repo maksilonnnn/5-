@@ -1,90 +1,69 @@
 ﻿using System;
-using System.Linq;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using calcaot.Services;
 using calcaot.ViewModels;
-using calcaot.Models;
 
 namespace calcaot
 {
     public partial class MainWindow : Window
     {
-        private readonly MainViewModel viewModel = new MainViewModel();
-        private bool _isDark = false;
+        private readonly IThemeService _themeService;
 
-        public MainWindow()
+        public MainWindow(MainViewModel viewModel, IThemeService themeService)
         {
             InitializeComponent();
-            DataContext = viewModel;
-            viewModel.PropertyChanged += (s, e) => UpdateProgressArc();
-            UpdateProgressArc();
+            DataContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+            _themeService = themeService ?? throw new ArgumentNullException(nameof(themeService));
+
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
 
-        private void UpdateProgressArc()
+        private void ViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            double progress = Math.Clamp(viewModel.Progress, 0.001, 0.999);
-            const double cx = 65, cy = 65, r = 60;
-            double startRad = -Math.PI / 2;
-            double endRad = startRad + progress * 2 * Math.PI;
-            double startX = cx + r * Math.Cos(startRad);
-            double startY = cy + r * Math.Sin(startRad);
-            double endX = cx + r * Math.Cos(endRad);
-            double endY = cy + r * Math.Sin(endRad);
-            var figure = new PathFigure { StartPoint = new Point(startX, startY) };
-            figure.Segments.Add(new ArcSegment(
-                new Point(endX, endY),
-                new Size(r, r),
-                0,
-                progress > 0.5,
-                SweepDirection.Clockwise,
-                true));
-            ProgressArc.Data = new PathGeometry(new[] { figure });
-        }
+            if (e.PropertyName != nameof(MainViewModel.IsDarkTheme))
+                return;
 
-        private void ToggleTheme_Click(object sender, RoutedEventArgs e)
-        {
-            _isDark = !_isDark;
-            var res = Application.Current.Resources;
-            if (_isDark)
+            if (sender is MainViewModel viewModel)
             {
-                res["AppBackground"]    = new SolidColorBrush(Color.FromRgb(28,  28,  30));
-                res["CardBackground"]   = new SolidColorBrush(Color.FromRgb(44,  44,  46));
-                res["PrimaryText"]      = new SolidColorBrush(Colors.White);
-                res["SecondaryText"]    = new SolidColorBrush(Color.FromRgb(174, 174, 178));
-                res["IconBackground"]   = new SolidColorBrush(Color.FromRgb(40,  55,  80));
-                res["DeleteBackground"] = new SolidColorBrush(Color.FromRgb(80,  30,  30));
-                res["EditBackground"]   = new SolidColorBrush(Color.FromRgb(40,  55,  80));
-                res["InputBorder"]      = new SolidColorBrush(Color.FromRgb(72,  72,  74));
-            }
-            else
-            {
-                res["AppBackground"]    = new SolidColorBrush(Color.FromRgb(245, 245, 247));
-                res["CardBackground"]   = new SolidColorBrush(Colors.White);
-                res["PrimaryText"]      = new SolidColorBrush(Color.FromRgb(28,  28,  30));
-                res["SecondaryText"]    = new SolidColorBrush(Color.FromRgb(142, 142, 147));
-                res["IconBackground"]   = new SolidColorBrush(Color.FromRgb(239, 244, 255));
-                res["DeleteBackground"] = new SolidColorBrush(Color.FromRgb(255, 240, 240));
-                res["EditBackground"]   = new SolidColorBrush(Color.FromRgb(239, 244, 255));
-                res["InputBorder"]      = new SolidColorBrush(Color.FromRgb(224, 224, 224));
+                Dispatcher.Invoke(() => AnimateThemeTransition(viewModel.IsDarkTheme));
             }
         }
 
-        private void AddFood_Click(object sender, RoutedEventArgs e)
+        private void AnimateThemeTransition(bool isDark)
         {
-            string mealName = (sender as Button)?.Tag?.ToString() ?? "";
-            var dialog = new AddFoodWindow(mealName) { Owner = this };
-            if (dialog.ShowDialog() == true)
-                viewModel.AddFood(mealName, dialog.FoodName, dialog.Weight, dialog.CalPer100);
-        }
+            var backgroundBrush = TryFindResource("AppBackground") as SolidColorBrush;
+            var overlayBrush = backgroundBrush != null
+                ? new SolidColorBrush(backgroundBrush.Color)
+                : new SolidColorBrush(Colors.Black);
 
-        private void MealRow_Click(object sender, RoutedEventArgs e)
-        {
-            string mealName = (sender as Button)?.Tag?.ToString() ?? "";
-            var meal = viewModel.MealGroups.FirstOrDefault(m => m.Name == mealName);
-            if (meal == null) return;
-            new MealDetailWindow(meal, viewModel) { Owner = this }.ShowDialog();
+            ThemeFadeOverlay.Fill = overlayBrush;
+            ThemeFadeOverlay.Visibility = Visibility.Visible;
+
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(180))
+            {
+                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+            };
+
+            fadeIn.Completed += (_, _) =>
+            {
+                _themeService.ApplyTheme(isDark);
+
+                var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(180))
+                {
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                };
+                fadeOut.Completed += (_, _) =>
+                {
+                    ThemeFadeOverlay.Visibility = Visibility.Collapsed;
+                };
+
+                ThemeFadeOverlay.BeginAnimation(OpacityProperty, fadeOut);
+            };
+
+            ThemeFadeOverlay.BeginAnimation(OpacityProperty, fadeIn);
         }
     }
 }
