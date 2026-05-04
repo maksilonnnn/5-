@@ -14,3 +14,17 @@ obj/
 # OS files
 Thumbs.db
 desktop.ini
+
+# IDE/editor files
+.vscode/
+.idea/
+*.sln.iml
+
+# NuGet / package artifacts
+packages/
+*.nupkg
+
+# Temporary files
+*.log
+*.tmp
+*~
