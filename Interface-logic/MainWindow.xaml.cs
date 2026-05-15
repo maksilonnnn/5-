@@ -3,20 +3,16 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using calcaot.Services;
 using calcaot.ViewModels;
 
 namespace calcaot
 {
     public partial class MainWindow : Window
     {
-        private readonly IThemeService _themeService;
-
-        public MainWindow(MainViewModel viewModel, IThemeService themeService)
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
-            _themeService = themeService ?? throw new ArgumentNullException(nameof(themeService));
 
             viewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
@@ -49,8 +45,6 @@ namespace calcaot
 
             fadeIn.Completed += (_, _) =>
             {
-                _themeService.ApplyTheme(isDark);
-
                 var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(180))
                 {
                     EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }

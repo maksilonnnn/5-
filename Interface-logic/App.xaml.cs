@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using calcaot.Interfaces;
 using calcaot.Services;
 using calcaot.ViewModels;
 
@@ -14,12 +15,9 @@ public partial class App : Application
 
         var dialogService = new DialogService();
         var themeService = new ThemeService();
-        _mainViewModel = new MainViewModel(dialogService);
+        _mainViewModel = new MainViewModel(dialogService, themeService);
 
-        // Применяем начальную тему
-        themeService.ApplyTheme(_mainViewModel.IsDarkTheme);
-
-        var mainWindow = new MainWindow(_mainViewModel, themeService);
+        var mainWindow = new MainWindow(_mainViewModel);
         mainWindow.Show();
     }
 }

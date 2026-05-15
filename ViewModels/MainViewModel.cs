@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using calcaot.Models;
-using calcaot.Services;
+using calcaot.Interfaces;
 using calcaot.ViewModels.Commands;
 
 namespace calcaot.ViewModels
@@ -14,6 +14,7 @@ namespace calcaot.ViewModels
         private const double DailyNorm = 2500;
 
         private readonly IDialogService _dialogService;
+        private readonly IThemeService _themeService;
         private bool _isDark;
 
         public CommandHistory History { get; } = new CommandHistory();
@@ -29,6 +30,7 @@ namespace calcaot.ViewModels
                 {
                     _isDark = value;
                     OnPropertyChanged();
+                    _themeService.ApplyTheme(_isDark);
                 }
             }
         }
@@ -43,9 +45,10 @@ namespace calcaot.ViewModels
         public double RemainingCalories => DailyNorm - ConsumedCalories;
         public double Progress => ConsumedCalories / DailyNorm;
 
-        public MainViewModel(IDialogService dialogService)
+        public MainViewModel(IDialogService dialogService, IThemeService themeService)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _themeService = themeService ?? throw new ArgumentNullException(nameof(themeService));
 
             ToggleThemeCommand = new RelayCommand(() => IsDarkTheme = !IsDarkTheme);
 

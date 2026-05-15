@@ -120,7 +120,7 @@ namespace calcaot.ViewModels
         private bool CanConfirm()
         {
             return !string.IsNullOrWhiteSpace(FoodName) &&
-                   double.TryParse(WeightText, out var w) && w > 0 &&
+                   double.TryParse(WeightText, out var w) && w >= 0 &&
                    double.TryParse(CaloriesText, out var c) && c >= 0;
         }
 
@@ -134,7 +134,7 @@ namespace calcaot.ViewModels
                 return;
             }
 
-            if (!double.TryParse(WeightText, out var weight) || weight <= 0)
+            if (!double.TryParse(WeightText, out var weight) || weight < 0)
             {
                 ErrorMessage = "Введите корректный вес.";
                 return;

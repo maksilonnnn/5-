@@ -1,7 +1,12 @@
 using System.Windows;
+using calcaot.Interfaces;
 
 namespace calcaot.Services
 {
+/// <summary>
+/// Реализация фасада над системой тем — паттерн Facade (Фасад).
+/// Скрывает детали работы с ResourceDictionary WPF за методом ApplyTheme().
+/// </summary>
     public class ThemeService : IThemeService
     {
         public void ApplyTheme(bool isDark)

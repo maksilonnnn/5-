@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using calcaot.Models;
-using calcaot.Services;
+using calcaot.Interfaces;
 using calcaot.ViewModels.Commands;
 
 namespace calcaot.ViewModels

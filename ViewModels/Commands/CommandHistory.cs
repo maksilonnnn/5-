@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using calcaot.ViewModels.Commands;
+using calcaot.Interfaces;
 
 namespace calcaot.ViewModels.Commands
 {
